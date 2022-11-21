@@ -29,7 +29,7 @@ RefString* createRefString(char* cstring) {
 	refString->length = length;
 	strncpy(refString->data, cstring, refString->length);
 
-	refString->data[sizeof(int) * 2 + sizeof(char) * refString->length] = '\0'; //string terminator
+	refString->data[refString->length] = '\0'; //string terminator
 
 	return refString;
 }
