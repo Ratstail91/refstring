@@ -4,8 +4,8 @@
 #include <stddef.h>
 
 //memory allocation hook
-typedef void* (*CStringAllocatorFn)(void* pointer, size_t oldSize, size_t newSize);
-void setCStringAllocatorFn(CStringAllocatorFn);
+typedef void* (*RefStringAllocatorFn)(void* pointer, size_t oldSize, size_t newSize);
+void setRefStringAllocatorFn(RefStringAllocatorFn);
 
 //the RefString structure
 typedef struct RefString {
@@ -22,4 +22,4 @@ int lengthRefString(RefString* refString);
 RefString* copyRefString(RefString* refString);
 RefString* deepCopyRefString(RefString* refString);
 char* toCString(RefString* refString);
-bool refStrEqual(RefString* lhs, RefString* rhs);
+bool equalsRefString(RefString* lhs, RefString* rhs);

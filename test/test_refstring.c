@@ -34,7 +34,7 @@ static void* testAllocator(void* pointer, size_t oldSize, size_t newSize) {
 
 int main() {
 	//setup
-	setCStringAllocatorFn(testAllocator);
+	setRefStringAllocatorFn(testAllocator);
 
 	//run tests
 	{
@@ -91,11 +91,11 @@ int main() {
 		RefString* str3 = createRefString("Hello kayne!");
 
 		//ascii "w" is larger than ascii "p"
-		if (refStrEqual(str1, str2) == false) {
+		if (equalsRefString(str1, str2) == false) {
 			return -1;
 		}
 
-		if (refStrEqual(str1, str3) == true) {
+		if (equalsRefString(str1, str3) == true) {
 			return -1;
 		}
 

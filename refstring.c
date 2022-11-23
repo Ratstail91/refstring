@@ -11,9 +11,9 @@ STATIC_ASSERT(sizeof(int) == 4);
 STATIC_ASSERT(sizeof(char) == 1);
 
 //memory allocation
-static CStringAllocatorFn allocate;
+static RefStringAllocatorFn allocate;
 
-void setCStringAllocatorFn(CStringAllocatorFn allocator) {
+void setRefStringAllocatorFn(RefStringAllocatorFn allocator) {
 	allocate = allocator;
 }
 
@@ -70,7 +70,7 @@ char* toCString(RefString* refString) {
 	return refString->data;
 }
 
-bool refStrEqual(RefString* lhs, RefString* rhs) {
+bool equalsRefString(RefString* lhs, RefString* rhs) {
 	//same pointer
 	if (lhs == rhs) {
 		return true;
