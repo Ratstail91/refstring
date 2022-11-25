@@ -104,6 +104,18 @@ int main() {
 		deleteRefString(str3); //every copy must be cleared
 	}
 
+	{
+		//compare with given string length
+		RefString* str1 = createRefStringLength("Hello world!", 5);
+
+		//ascii "w" is larger than ascii "p"
+		if (equalsRefStringCString(str1, "Hello") == false) {
+			return -1;
+		}
+
+		deleteRefString(str1);
+	}
+
 	//cleanup
 	if (allocatedMemory != 0) {
 		fprintf(stderr, ERROR "Memory leak detected - lost %ld bytes\n" RESET, allocatedMemory);
