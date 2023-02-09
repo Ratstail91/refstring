@@ -23,7 +23,7 @@ static void* testAllocator(void* pointer, size_t oldSize, size_t newSize) {
 	void* mem = realloc(pointer, newSize);
 
 	if (mem == NULL) {
-		fprintf(stderr, "Memory allocation error (requested %d for %ld, replacing %d)\n", (int)newSize, (long int)pointer, (int)oldSize);
+		fprintf(stderr, "Memory allocation error (requested %zu, replacing %zu)\n", (int)newSize, (int)oldSize);
 		exit(-1);
 	}
 
@@ -48,7 +48,7 @@ int main() {
 
 	//cleanup
 	if (allocatedMemory != 0) {
-		fprintf(stderr, "Memory leak detected - lost %ld bytes\n", allocatedMemory);
+		fprintf(stderr, "Memory leak detected - lost %zu bytes\n", allocatedMemory);
 		return 1;
 	}
 
