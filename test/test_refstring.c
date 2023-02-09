@@ -23,7 +23,7 @@ static void* testAllocator(void* pointer, size_t oldSize, size_t newSize) {
 	void* mem = realloc(pointer, newSize);
 
 	if (mem == NULL) {
-		fprintf(stderr, "Memory allocation error (requested %zu, replacing %zu)\n", (int)newSize, (int)oldSize);
+		fprintf(stderr, "Memory allocation error (requested %zu, replacing %zu)\n", newSize, oldSize);
 		exit(-1);
 	}
 
