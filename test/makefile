@@ -15,7 +15,7 @@ all: $(OBJ) $(TESTS:%.c=../$(REFSTRING_OUTDIR)/%.exe)
 
 ../$(REFSTRING_OUTDIR)/%.exe: $(ODIR)/%.o
 	@$(CC) -o $@ $< $(TARGETS:../%.c=$(ODIR)/%.o) $(CFLAGS) $(LIBS)
-ifeq ($(shell uname),Linux)
+ifeq ($(shell uname)$(DISABLE_VALGRIND),Linux)
 	valgrind --leak-check=full --track-origins=yes $@
 else
 	$@

@@ -39,12 +39,10 @@ RefString* createRefStringLength(char* cstring, int length) {
 }
 
 void deleteRefString(RefString* refString) {
-	if (refString->refcount > 0) {
-		//decrement, then check
-		refString->refcount--;
-		if (refString->refcount <= 0) {
-			allocate(refString, sizeof(int) * 2 + sizeof(char) * refString->length + 1, 0);
-		}
+	//decrement, then check
+	refString->refcount--;
+	if (refString->refcount <= 0) {
+		allocate(refString, sizeof(int) * 2 + sizeof(char) * refString->length + 1, 0);
 	}
 }
 

@@ -2,18 +2,33 @@ name: Comprehensive Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  test-valgrind:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
     - name: install valgrind
       run: sudo apt install valgrind
-    - name: make test
+    - name: make test (valgrind)
       run: make test
+  
+  test-sanitized:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: make test (sanitized)
+      run: make test-sanitized
+  
+  test-mingw32:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - name: make test (mingw32)
+        run: make test

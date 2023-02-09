@@ -9,6 +9,12 @@ all: test
 test: clean $(REFSTRING_OUTDIR)
 	$(MAKE) -C test
 
+test-sanitized: export CFLAGS+=-fsanitize=address,undefined
+test-sanitized: export LIBS+=-static-libasan
+test-sanitized: export DISABLE_VALGRIND=true
+test-sanitized: clean $(REFSTRING_OUTDIR)
+	$(MAKE) -C test
+
 $(REFSTRING_OUTDIR):
 	mkdir $(REFSTRING_OUTDIR)
 
