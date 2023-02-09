@@ -1,7 +1,5 @@
 #include "refstring.h"
 
-#include "console_colors.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +23,7 @@ static void* testAllocator(void* pointer, size_t oldSize, size_t newSize) {
 	void* mem = realloc(pointer, newSize);
 
 	if (mem == NULL) {
-		fprintf(stderr, ERROR "Memory allocation error (requested %d for %ld, replacing %d)\n" RESET, (int)newSize, (long int)pointer, (int)oldSize);
+		fprintf(stderr, "Memory allocation error (requested %d for %ld, replacing %d)\n", (int)newSize, (long int)pointer, (int)oldSize);
 		exit(-1);
 	}
 
@@ -50,10 +48,10 @@ int main() {
 
 	//cleanup
 	if (allocatedMemory != 0) {
-		fprintf(stderr, ERROR "Memory leak detected - lost %ld bytes\n" RESET, allocatedMemory);
+		fprintf(stderr, "Memory leak detected - lost %ld bytes\n", allocatedMemory);
 		return 1;
 	}
 
-	fprintf(stdout, NOTICE "All good\n" RESET);
+	fprintf(stdout, "All good\n");
 	return 0;
 }
