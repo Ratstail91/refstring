@@ -15,8 +15,8 @@ typedef struct RefString {
 } RefString;
 
 //API
-RefString* createRefString(char* cstring);
-RefString* createRefStringLength(char* cstring, size_t length);
+RefString* createRefString(const char* cstring);
+RefString* createRefStringLength(const char* cstring, size_t length);
 void deleteRefString(RefString* refString);
 int countRefString(RefString* refString);
 size_t lengthRefString(RefString* refString);

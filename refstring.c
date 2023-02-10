@@ -10,13 +10,13 @@ void setRefStringAllocatorFn(RefStringAllocatorFn allocator) {
 }
 
 //API
-RefString* createRefString(char* cstring) {
+RefString* createRefString(const char* cstring) {
 	size_t length = strlen(cstring);
 
 	return createRefStringLength(cstring, length);
 }
 
-RefString* createRefStringLength(char* cstring, size_t length) {
+RefString* createRefStringLength(const char* cstring, size_t length) {
 	//allocate the memory area (including metadata space)
 	RefString* refString = allocate(NULL, 0, sizeof(size_t) + sizeof(int) + sizeof(char) * (length + 1));
 
