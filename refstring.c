@@ -11,7 +11,7 @@ void setRefStringAllocatorFn(RefStringAllocatorFn allocator) {
 
 //API
 RefString* createRefString(char* cstring) {
-	int length = strlen(cstring);
+	size_t length = strlen(cstring);
 
 	return createRefStringLength(cstring, length);
 }
