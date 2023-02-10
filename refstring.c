@@ -1,14 +1,6 @@
 #include "refstring.h"
 
 #include <string.h>
-#include <assert.h>
-
-//test variable sizes based on platform (safety)
-#define STATIC_ASSERT(test_for_true) static_assert((test_for_true), "(" #test_for_true ") failed")
-
-STATIC_ASSERT(sizeof(RefString) == 12);
-STATIC_ASSERT(sizeof(int) == 4);
-STATIC_ASSERT(sizeof(char) == 1);
 
 //memory allocation
 static RefStringAllocatorFn allocate;
@@ -24,12 +16,16 @@ RefString* createRefString(char* cstring) {
 	return createRefStringLength(cstring, length);
 }
 
-RefString* createRefStringLength(char* cstring, int length) {
+RefString* createRefStringLength(char* cstring, size_t length) {
 	//allocate the memory area (including metadata space)
-	RefString* refString = (RefString*)allocate(NULL, 0, sizeof(int) * 2 + sizeof(char) * length + 1);
+	RefString* refString = allocate(NULL, 0, sizeof(size_t) + sizeof(int) + sizeof(char) * (length + 1));
+
+	if (refString == NULL) {
+		return NULL;
+	}
 
 	//set the data
-	refString->refcount = 1;
+	refString->refCount = 1;
 	refString->length = length;
 	strncpy(refString->data, cstring, refString->length);
 
@@ -40,32 +36,32 @@ RefString* createRefStringLength(char* cstring, int length) {
 
 void deleteRefString(RefString* refString) {
 	//decrement, then check
-	refString->refcount--;
-	if (refString->refcount <= 0) {
-		allocate(refString, sizeof(int) * 2 + sizeof(char) * refString->length + 1, 0);
+	refString->refCount--;
+	if (refString->refCount <= 0) {
+		allocate(refString, sizeof(size_t) + sizeof(int) + sizeof(char) * (refString->length + 1), 0);
 	}
 }
 
 int countRefString(RefString* refString) {
-	return refString->refcount;
+	return refString->refCount;
 }
 
-int lengthRefString(RefString* refString) {
+size_t lengthRefString(RefString* refString) {
 	return refString->length;
 }
 
 RefString* copyRefString(RefString* refString) {
 	//Cheaty McCheater Face
-	refString->refcount++;
+	refString->refCount++;
 	return refString;
 }
 
 RefString* deepCopyRefString(RefString* refString) {
-	//create a new string, with a new refcount
+	//create a new string, with a new refCount
 	return createRefStringLength(refString->data, refString->length);
 }
 
-char* toCString(RefString* refString) {
+const char* toCString(RefString* refString) {
 	return refString->data;
 }
 
@@ -86,7 +82,7 @@ bool equalsRefString(RefString* lhs, RefString* rhs) {
 
 bool equalsRefStringCString(RefString* lhs, char* cstring) {
 	//get the rhs length
-	int length = strlen(cstring);
+	size_t length = strlen(cstring);
 
 	//different length
 	if (lhs->length != length) {

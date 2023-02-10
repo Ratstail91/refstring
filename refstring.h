@@ -9,19 +9,19 @@ void setRefStringAllocatorFn(RefStringAllocatorFn);
 
 //the RefString structure
 typedef struct RefString {
-	int refcount;
-	int length;
-	char data[1];
+	size_t length;
+	int refCount;
+	char data[];
 } RefString;
 
 //API
 RefString* createRefString(char* cstring);
-RefString* createRefStringLength(char* cstring, int length);
+RefString* createRefStringLength(char* cstring, size_t length);
 void deleteRefString(RefString* refString);
 int countRefString(RefString* refString);
-int lengthRefString(RefString* refString);
+size_t lengthRefString(RefString* refString);
 RefString* copyRefString(RefString* refString);
 RefString* deepCopyRefString(RefString* refString);
-char* toCString(RefString* refString);
+const char* toCString(RefString* refString);
 bool equalsRefString(RefString* lhs, RefString* rhs);
 bool equalsRefStringCString(RefString* lhs, char* cstring);
